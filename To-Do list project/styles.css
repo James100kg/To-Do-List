@@ -1,0 +1,19 @@
+body {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    
+    font-family: sans-serif;
+    background-color:aliceblue;
+    gap: 300px
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+}
+
+form {
+    margin-top: 50px;
+    margin-right: 300px;
+}
