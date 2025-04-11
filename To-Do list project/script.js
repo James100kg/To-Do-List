@@ -23,6 +23,26 @@ form.addEventListener("submit", (e) => {
         newTask.classList.remove("completed");
       }
     });
+    let taskLabel = newTask.querySelector("label");
+    makeLabelEditable(taskLabel, newTask);
   }
   e.preventDefault();
 });
+
+function makeLabelEditable(taskLabel, newTask) {
+  taskLabel.addEventListener("click", () => {
+    let editBox = document.createElement("input");
+    editBox.value = taskLabel.textContent;
+    newTask.replaceChild(editBox, taskLabel);
+
+    editBox.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        let newLabel = document.createElement("label");
+        newLabel.textContent = editBox.value;
+        newTask.replaceChild(newLabel, editBox);
+        makeLabelEditable(newLabel, newTask);
+      }
+    });
+  });
+}
+
