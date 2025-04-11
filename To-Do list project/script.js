@@ -3,13 +3,15 @@ const input = document.getElementById("task-input");
 const taskList = document.getElementById("tasks-list");
 
 form.addEventListener("submit", (e) => {
-  if (input.value.length) {
+    e.preventDefault();
+    if (input.value.length) {
     let newTask = document.createElement("li");
     newTask.innerHTML =
       '<input type="checkbox" id="task-1"> <label for="task-1">' +
       input.value +
       '</label><button class="delete-btn"><i class="fa fa-close"></i></button>';
     taskList.appendChild(newTask);
+    saveTasks()
     input.value = "";
     let deleteButton = newTask.querySelector(".delete-btn");
     deleteButton.addEventListener("click", (e) => {
@@ -26,7 +28,7 @@ form.addEventListener("submit", (e) => {
     let taskLabel = newTask.querySelector("label");
     makeLabelEditable(taskLabel, newTask);
   }
-  e.preventDefault();
+  
 });
 
 function makeLabelEditable(taskLabel, newTask) {
@@ -46,3 +48,30 @@ function makeLabelEditable(taskLabel, newTask) {
   });
 }
 
+
+function saveTasks() {
+    let list = document.querySelectorAll('li')
+    let tasks = []
+    for (i = 0; i < list.length; i++) {
+        const li = list[i]
+        const label = li.querySelector('label')
+        const checkBox = li.querySelector("input[type='checkbox")
+        const taskText = label.textContent
+        const isCompleted = checkBox.checked
+        const taskObject = {
+            text: taskText,
+            completed: isCompleted
+        }
+        tasks.push(taskObject)
+    } localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTasks() {
+    localStorage.getItem("tasks")
+    let savedTasks = JSON.parse(localStorage.getItem("tasks"));
+
+}
+
+
+let savedTasks = JSON.parse(localStorage.getItem("tasks"));
+console.log(savedTasks);
